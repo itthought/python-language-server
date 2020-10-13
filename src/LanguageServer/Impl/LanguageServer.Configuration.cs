@@ -42,16 +42,16 @@ namespace Microsoft.Python.LanguageServer.Implementation {
         public async Task DidChangeConfiguration(JToken token, CancellationToken cancellationToken) {
             using (await _prioritizer.ConfigurationPriorityAsync(cancellationToken)) {
                 Debug.Assert(_initialized);
-                Console.WriteLine("didChangeConfiguration rpc request received");
+                Log?.Log(TraceEventType.Verbose, "didChangeConfiguration rpc request received");
                 var settings = new LanguageServerSettings();
 
                 // https://github.com/microsoft/python-language-server/issues/915
                 // If token or settings are missing, assume defaults.
                 var rootSection = token?["settings"];
                 var pythonSection = rootSection?["python"];
-                Console.WriteLine("didChangeConfiguration rpc request received");
-                Console.WriteLine("Setting data root == " + rootSection);
-                Console.WriteLine("python tag data == " + pythonSection);
+                Log?.Log(TraceEventType.Verbose, "Setting data root == ", rootSection);
+                //Console.WriteLine("Setting data root == " + rootSection);
+                //Console.WriteLine("python tag data == " + pythonSection);
                 if (pythonSection == null) {
                     return;
                 }
@@ -61,7 +61,8 @@ namespace Microsoft.Python.LanguageServer.Implementation {
                 settings.completion.addBrackets = GetSetting(autoComplete, "addBrackets", false);
 
                 var analysis = pythonSection["analysis"];
-                Console.WriteLine("python analysis data == " + analysis);
+                // Console.WriteLine("python analysis data == " + analysis);
+                Log?.Log(TraceEventType.Verbose, "python analysis data == ", analysis);
                 settings.symbolsHierarchyDepthLimit = GetSetting(analysis, "symbolsHierarchyDepthLimit", 10);
                 settings.symbolsHierarchyMaxSymbols = GetSetting(analysis, "symbolsHierarchyMaxSymbols", 1000);
 
