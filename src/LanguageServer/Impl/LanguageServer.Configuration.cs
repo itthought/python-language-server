@@ -49,7 +49,7 @@ namespace Microsoft.Python.LanguageServer.Implementation {
                 // If token or settings are missing, assume defaults.
                 var rootSection = token?["settings"];
                 var pythonSection = rootSection?["python"];
-                Debug.Print("Setting data root == ", rootSection);
+                Debug.Print("Setting data rootSection == {0} pythonSection=={1}", rootSection, pythonSection);
                 //Console.WriteLine("Setting data root == " + rootSection);
                 //Console.WriteLine("python tag data == " + pythonSection);
                 if (pythonSection == null) {
@@ -62,7 +62,7 @@ namespace Microsoft.Python.LanguageServer.Implementation {
 
                 var analysis = pythonSection["analysis"];
                 // Console.WriteLine("python analysis data == " + analysis);
-                Debug.Print("python analysis data == ", analysis);
+                Debug.Print("python analysis data =={0} ", analysis);
                 settings.symbolsHierarchyDepthLimit = GetSetting(analysis, "symbolsHierarchyDepthLimit", 10);
                 settings.symbolsHierarchyMaxSymbols = GetSetting(analysis, "symbolsHierarchyMaxSymbols", 1000);
 
