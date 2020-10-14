@@ -42,14 +42,14 @@ namespace Microsoft.Python.LanguageServer.Implementation {
         public async Task DidChangeConfiguration(JToken token, CancellationToken cancellationToken) {
             using (await _prioritizer.ConfigurationPriorityAsync(cancellationToken)) {
                 Debug.Assert(_initialized);
-                Log?.Log(TraceEventType.Verbose, "didChangeConfiguration rpc request received");
+                Debug.Print("didChangeConfiguration rpc request received");
                 var settings = new LanguageServerSettings();
 
                 // https://github.com/microsoft/python-language-server/issues/915
                 // If token or settings are missing, assume defaults.
                 var rootSection = token?["settings"];
                 var pythonSection = rootSection?["python"];
-                Log?.Log(TraceEventType.Verbose, "Setting data root == ", rootSection);
+                Debug.Print("Setting data root == ", rootSection);
                 //Console.WriteLine("Setting data root == " + rootSection);
                 //Console.WriteLine("python tag data == " + pythonSection);
                 if (pythonSection == null) {
@@ -62,7 +62,7 @@ namespace Microsoft.Python.LanguageServer.Implementation {
 
                 var analysis = pythonSection["analysis"];
                 // Console.WriteLine("python analysis data == " + analysis);
-                Log?.Log(TraceEventType.Verbose, "python analysis data == ", analysis);
+                Debug.Print("python analysis data == ", analysis);
                 settings.symbolsHierarchyDepthLimit = GetSetting(analysis, "symbolsHierarchyDepthLimit", 10);
                 settings.symbolsHierarchyMaxSymbols = GetSetting(analysis, "symbolsHierarchyMaxSymbols", 1000);
 
